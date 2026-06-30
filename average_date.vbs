@@ -6,8 +6,14 @@ Option Explicit
 Dim dateList, inputDate, dates
 Set dateList = CreateObject("System.Collections.ArrayList")
 
+' Default dates (suggested - enter them or your own)
+Dim defaultDates
+defaultDates = Array("27. oct. 1985", "14. jun. 1986", "31. jan. 2017", "4. may 2019", "22. sept. 2022")
+
+WScript.Echo "Suggested default dates (copy/paste into input or enter new ones):" & vbCrLf & Join(defaultDates, vbCrLf)
+
 Do
-    inputDate = InputBox("Enter a date (YYYY-MM-DD or any valid format):" & vbCrLf & "Press Cancel to stop and calculate average.", "Date Input")
+    inputDate = InputBox("Enter a date (e.g. 27. oct. 1985, YYYY-MM-DD or any valid):" & vbCrLf & "Press Cancel to finish and calculate average.", "Date Input", "")
     If inputDate = "" Then Exit Do ' Cancel pressed
     If IsDate(inputDate) Then
         dateList.Add inputDate
