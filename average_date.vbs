@@ -6,9 +6,9 @@ Option Explicit
 Dim dateList, inputDate, dates
 Set dateList = CreateObject("System.Collections.ArrayList")
 
-' Default dates pre-filled one-by-one (press Enter to accept each as-is)
+' Default dates pre-filled one-by-one (press Enter to accept each as-is) - DD.MM.YYYY format for reliability
 Dim defaultDates, i
-defaultDates = Array("27. oct. 1985", "14. jun. 1986", "31. jan. 2017", "4. may 2019", "22. sept. 2022")
+defaultDates = Array("27.10.1985", "14.06.1986", "31.01.2017", "04.05.2019", "22.09.2022")
 
 For i = 0 To UBound(defaultDates)
     inputDate = InputBox("Date #" & (dateList.Count + 1) & " (press Enter to accept default, edit if needed):" & vbCrLf & "Cancel to stop adding.", "Date Input", defaultDates(i))
