@@ -38,6 +38,9 @@ End If
 
 dates = dateList.ToArray()
 
+Dim numEntries
+numEntries = dateList.Count
+
 Function AverageDate(dateArray)
     Dim totalDays, count, i, avgDays, avgDate
     totalDays = 0
@@ -58,7 +61,34 @@ Function AverageDate(dateArray)
     avgDays = totalDays / count
     avgDate = CDate(Round(avgDays)) ' Round to nearest day
     
-    AverageDate = FormatDateTime(avgDate, vbShortDate)
+    AverageDate = avgDate
 End Function
 
-WScript.Echo "Average Date: " & AverageDate(dates)
+Dim avgDate
+avgDate = AverageDate(dates)
+
+' Calculate time elapsed since average date * number of entries
+Dim nowDate, diffSeconds, diffMinutes, diffHours, diffDays, diffWeeks, diffMonths, diffYears
+nowDate = Now
+diffSeconds = DateDiff("s", avgDate, nowDate) * numEntries
+diffMinutes = DateDiff("n", avgDate, nowDate) * numEntries
+diffHours = DateDiff("h", avgDate, nowDate) * numEntries
+diffDays = DateDiff("d", avgDate, nowDate) * numEntries
+diffWeeks = DateDiff("ww", avgDate, nowDate) * numEntries
+diffMonths = DateDiff("m", avgDate, nowDate) * numEntries
+diffYears = DateDiff("yyyy", avgDate, nowDate) * numEntries
+
+Dim msg
+msg = "Average Date: " & FormatDateTime(avgDate, vbShortDate) & " (from " & numEntries & " dates)" & vbCrLf & vbCrLf & _
+      "Cumulative elapsed time (x" & numEntries & "):" & vbCrLf & _
+      diffYears & " years" & vbCrLf & _
+      diffMonths & " months" & vbCrLf & _
+      diffWeeks & " weeks" & vbCrLf & _
+      diffDays & " days" & vbCrLf & _
+      diffHours & " hours" & vbCrLf & _
+      diffMinutes & " minutes" & vbCrLf & _
+      diffSeconds & " seconds"
+
+MsgBox msg, vbInformation, "Average Date & Scaled Time Elapsed"
+
+WScript.Echo "Average Date: " & FormatDateTime(avgDate, vbShortDate)
