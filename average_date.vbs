@@ -3,12 +3,25 @@
 
 Option Explicit
 
-Dim dates(4) ' Example dates, can be modified or input
-dates(0) = "2023-01-15"
-dates(1) = "2023-03-20"
-dates(2) = "2024-02-29" ' Leap year
-dates(3) = "2023-12-31"
-dates(4) = "2024-06-15"
+Dim dateList, inputDate, dates
+Set dateList = CreateObject("System.Collections.ArrayList")
+
+Do
+    inputDate = InputBox("Enter a date (YYYY-MM-DD or any valid format):" & vbCrLf & "Press Cancel to stop and calculate average.", "Date Input")
+    If inputDate = "" Then Exit Do ' Cancel pressed
+    If IsDate(inputDate) Then
+        dateList.Add inputDate
+    Else
+        MsgBox "Invalid date. Please try again.", vbExclamation
+    End If
+Loop
+
+If dateList.Count = 0 Then
+    WScript.Echo "No valid dates entered."
+    WScript.Quit
+End If
+
+dates = dateList.ToArray()
 
 Function AverageDate(dateArray)
     Dim totalDays, count, i, avgDays, avgDate
